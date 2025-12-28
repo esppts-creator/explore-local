@@ -6,27 +6,27 @@ interface CategoryPillsProps {
   onSelect: (category: PlaceCategory | 'all') => void;
 }
 
-const categories: (PlaceCategory | 'all')[] = [
-  'all',
-  'cultural',
-  'tourist',
-  'cafe',
-  'food_court',
-  'hidden_gem',
+const categories: { key: PlaceCategory | 'all'; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'cultural', label: 'Temples' },
+  { key: 'tourist', label: 'Attractions' },
+  { key: 'cafe', label: 'Cafés' },
+  { key: 'food_court', label: 'Food' },
+  { key: 'hidden_gem', label: 'Hidden Gems' },
 ];
 
 export function CategoryPills({ selected, onSelect }: CategoryPillsProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-      {categories.map((category) => (
+    <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+      {categories.map(({ key, label }) => (
         <Button
-          key={category}
-          variant={selected === category ? 'pillActive' : 'pill'}
+          key={key}
+          variant={selected === key ? 'pillActive' : 'pill'}
           size="pill"
-          onClick={() => onSelect(category)}
-          className="shrink-0 capitalize transition-all duration-300"
+          onClick={() => onSelect(key)}
+          className="shrink-0 transition-all duration-300"
         >
-          {category === 'all' ? 'All' : categoryLabels[category as PlaceCategory]}
+          {label}
         </Button>
       ))}
     </div>

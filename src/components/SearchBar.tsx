@@ -1,4 +1,4 @@
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search, Mic } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -8,27 +8,28 @@ interface SearchBarProps {
   onFilterClick?: () => void;
 }
 
-export function SearchBar({ value, onChange, onFilterClick }: SearchBarProps) {
+export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className="relative flex items-center gap-2">
-      <div className="relative flex-1">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <div className="relative">
+      <div className="relative flex items-center">
+        <div className="absolute left-4 flex items-center justify-center w-8 h-8 rounded-lg bg-primary/20">
+          <Search className="h-4 w-4 text-primary" />
+        </div>
         <Input
           type="text"
           placeholder="Search places, events..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pl-11 pr-4 h-12 bg-secondary/50 border-border/50 rounded-xl focus:ring-2 focus:ring-primary/30 transition-all"
+          className="pl-14 pr-12 h-14 bg-secondary/60 border-border/40 rounded-2xl text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all"
         />
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="absolute right-2 h-10 w-10 text-muted-foreground hover:text-foreground"
+        >
+          <Mic className="h-5 w-5" />
+        </Button>
       </div>
-      <Button 
-        variant="icon" 
-        size="icon" 
-        onClick={onFilterClick}
-        className="h-12 w-12 shrink-0"
-      >
-        <SlidersHorizontal className="h-5 w-5" />
-      </Button>
     </div>
   );
 }
