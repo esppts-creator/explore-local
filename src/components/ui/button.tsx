@@ -13,10 +13,10 @@ const buttonVariants = cva(
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-border bg-transparent hover:bg-secondary hover:text-secondary-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-secondary hover:text-secondary-foreground",
+        ghost: "hover:bg-secondary/60 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        pill: "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground rounded-full",
-        pillActive: "gradient-primary text-primary-foreground rounded-full shadow-glow",
+        pill: "bg-secondary/80 text-muted-foreground border border-border/40 hover:bg-primary hover:text-primary-foreground hover:border-primary rounded-full",
+        pillActive: "bg-primary text-primary-foreground rounded-full shadow-glow border border-primary",
         icon: "bg-secondary/50 backdrop-blur-sm hover:bg-secondary rounded-full",
       },
       size: {
@@ -24,7 +24,7 @@ const buttonVariants = cva(
         sm: "h-9 px-4",
         lg: "h-12 px-8 text-base",
         icon: "h-10 w-10",
-        pill: "h-9 px-5 text-xs font-medium",
+        pill: "h-8 px-4 text-xs font-medium",
       },
     },
     defaultVariants: {

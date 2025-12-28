@@ -3,13 +3,14 @@ import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { CategoryPills } from '@/components/CategoryPills';
 import { FeaturedCard } from '@/components/FeaturedCard';
-import { PlaceCard } from '@/components/PlaceCard';
+import { PlaceCard, PlaceCardHorizontal } from '@/components/PlaceCard';
 import { BottomNav } from '@/components/BottomNav';
 import { PlaceDetail } from '@/components/PlaceDetail';
 import { mockPlaces, featuredPlaces } from '@/data/mockPlaces';
 import { Place, PlaceCategory } from '@/types/place';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { ChevronRight } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   const [selectedCity, setSelectedCity] = useState('Bhilai');
@@ -69,16 +70,15 @@ const Index = () => {
         {/* Featured Section */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl text-foreground">
-              Featured Today
+            <h2 className="font-display text-lg font-semibold text-foreground">
+              Featured This Week
             </h2>
-            <button className="flex items-center gap-1 text-sm text-primary hover:underline">
-              View All
-              <ChevronRight className="h-4 w-4" />
+            <button className="text-sm text-primary hover:underline font-medium">
+              See All
             </button>
           </div>
           
-          <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 no-scrollbar">
             {cityFeaturedPlaces.length > 0 ? (
               cityFeaturedPlaces.map((place, index) => (
                 <div 
@@ -109,55 +109,74 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Near You Section */}
+        {/* Explore Section */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl text-foreground">
-              Near You
+            <h2 className="font-display text-lg font-semibold text-foreground">
+              Explore Chhattisgarh
             </h2>
-            <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-              Sort
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
+              <SlidersHorizontal className="h-4 w-4" />
+              Filter
+            </Button>
           </div>
 
           {locationError && (
-            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-sm text-amber-400">
+            <div className="p-3 bg-primary/10 border border-primary/20 rounded-xl text-sm text-muted-foreground">
               {locationError} - Showing default location.
             </div>
           )}
 
-          <div className="space-y-3">
-            {filteredPlaces.length > 0 ? (
-              filteredPlaces.map((place, index) => (
+          {/* Grid of place cards */}
+          <div className="grid grid-cols-2 gap-3">
+            {filteredPlaces.slice(0, 4).map((place, index) => (
+              <div 
+                key={place.id}
+                className="animate-fade-in opacity-0"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <PlaceCard 
+                  place={place} 
+                  onClick={() => setSelectedPlace(place)} 
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Remaining places as horizontal cards */}
+          {filteredPlaces.length > 4 && (
+            <div className="space-y-3 mt-4">
+              {filteredPlaces.slice(4).map((place, index) => (
                 <div 
                   key={place.id}
                   className="animate-fade-in opacity-0"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+                  style={{ animationDelay: `${(index + 4) * 0.05}s` }}
                 >
-                  <PlaceCard 
+                  <PlaceCardHorizontal 
                     place={place} 
                     onClick={() => setSelectedPlace(place)} 
                   />
                 </div>
-              ))
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  No places found in {selectedCity} matching your criteria.
-                </p>
-                <button 
-                  onClick={() => {
-                    setSelectedCategory('all');
-                    setSearchQuery('');
-                  }}
-                  className="mt-2 text-primary hover:underline"
-                >
-                  Clear filters
-                </button>
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {filteredPlaces.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                No places found in {selectedCity} matching your criteria.
+              </p>
+              <button 
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSearchQuery('');
+                }}
+                className="mt-2 text-primary hover:underline"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </section>
       </main>
 

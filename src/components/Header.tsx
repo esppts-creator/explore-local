@@ -16,41 +16,43 @@ const cities = ['Bhilai', 'Durg', 'Raipur'];
 
 export function Header({ selectedCity, onCityChange }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-xl border-b border-border/30">
       <div className="container py-4">
-        <div className="flex flex-col items-center gap-3">
-          {/* Logo */}
-          <div className="text-center">
-            <h1 className="font-display text-2xl tracking-[0.3em] text-foreground">
-              VIHAAR
-            </h1>
-            <p className="text-xs text-muted-foreground tracking-wide">
-              The Pulse of Chhattisgarh
-            </p>
+        <div className="flex items-center justify-between">
+          {/* Logo Section */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/20">
+              <span className="text-xl">🛕</span>
+            </div>
+            <div>
+              <h1 className="font-cursive text-2xl text-primary">
+                Vihaar
+              </h1>
+            </div>
           </div>
 
           {/* City Selector */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button 
-                variant="outline" 
-                className="gap-2 bg-secondary/50 border-border/50 hover:bg-secondary"
+                variant="ghost" 
+                className="gap-1.5 text-muted-foreground hover:text-foreground"
               >
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm">{selectedCity}, Chhattisgarh</span>
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm font-medium">{selectedCity} CG</span>
+                <ChevronDown className="h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent 
-              align="center" 
-              className="bg-card border-border"
+              align="end" 
+              className="bg-card border-border min-w-[140px]"
             >
               {cities.map((city) => (
                 <DropdownMenuItem
                   key={city}
                   onClick={() => onCityChange(city)}
                   className={`cursor-pointer ${
-                    city === selectedCity ? 'text-primary' : ''
+                    city === selectedCity ? 'text-primary bg-primary/10' : ''
                   }`}
                 >
                   <MapPin className="h-4 w-4 mr-2" />
@@ -60,6 +62,11 @@ export function Header({ selectedCity, onCityChange }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+
+        {/* Tagline */}
+        <p className="mt-1 text-sm text-muted-foreground">
+          The Pulse of Chhattisgarh
+        </p>
       </div>
     </header>
   );
